@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anan 1.0 官方下载</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            overflow: hidden;
+            font-family: "Microsoft YaHei", sans-serif;
+            color: #fff;
+        }
+        .container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+        .section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        /* ====================== 第一页 ====================== */
+        .page1 {
+            background: #ffffff;
+        }
+        .page1 .purple-arc {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 52vh;
+            background: #c49eff;
+            border-bottom-left-radius: 50% 100%;
+            border-bottom-right-radius: 50% 100%;
+        }
+        .page1 h1 {
+            position: relative;
+            z-index: 10;
+            font-size: 32px;
+            margin-top: -12vh;
+        }
+        .app-logo {
+            width: 60px;
+            height: 60px;
+            background: url("q1.png") center center / cover no-repeat;
+            border-radius: 14px;
+            margin-top: 40px;
+            position: relative;
+            z-index: 999;
+            transition: transform 0.85s ease;
+        }
+
+        /* ====================== 第二页 ====================== */
+        .page2 {
+            background: linear-gradient(135deg, #f9e8ff, #c49eff);
+            opacity: 0;
+            transition: opacity 0.7s ease;
+        }
+        .page2.show {
+            opacity: 1;
+        }
+        .page2 .text-box {
+            text-align: center;
+            padding: 0 20px;
+        }
+        .page2 h2 {
+            font-size: 26px;
+            margin-bottom: 12px;
+        }
+        .page2 p {
+            font-size: 17px;
+            opacity: 0.9;
+        }
+
+        /* ====================== 第三页 ====================== */
+        .page3 {
+            background: #c49eff;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+        }
+        .page3.show {
+            opacity: 1;
+        }
+        .page3 .logo-small {
+            width: 70px;
+            height: 70px;
+            background: url("q1.png") center center / cover no-repeat;
+            border-radius: 16px;
+            margin-bottom: 12px;
+        }
+        .download-btn {
+            margin-top: 30px;
+            padding: 12px 36px;
+            background: #fff;
+            color: #a87dff;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        /* ====================== 底部署名 ====================== */
+        .footer-text {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            z-index: 1000;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 第1页：欢迎页 -->
+    <div class="section page1">
+        <div class="purple-arc"></div>
+        <h1>Welcome Anan 1.0</h1>
+        <div class="app-logo" id="logo"></div>
+    </div>
+
+    <!-- 第2页：功能介绍 -->
+    <div class="section page2">
+        <div class="text-box">
+            <h2>无需联网 自建知识库 AI对话</h2>
+            <p>安全 · 隐私 · 高效 · 本地运行</p>
+        </div>
+    </div>
+
+    <!-- 第3页：下载页 -->
+    <div class="section page3">
+        <div class="logo-small"></div>
+        <h2>Anan 1.0</h2>
+        <a href="https://anan-1434870200.cos-website.ap-nanjing.myqcloud.com/Anan.apk" class="download-btn">立即下载</a>
+    </div>
+</div>
+
+<div class="footer-text">Tracy Duan</div>
+
+<script>
+    const container = document.querySelector('.container');
+    const logo = document.getElementById('logo');
+    const page2 = document.querySelector('.page2');
+    const page3 = document.querySelector('.page3');
+    const h = window.innerHeight;
+
+    container.addEventListener('scroll', () => {
+        let top = container.scrollTop;
+
+        // 第一页 → 第二页：LOGO放大
+        if (top < h) {
+            let scale = 1 + (top / h) * 28;
+            logo.style.transform = `scale(${scale})`;
+            if (top > h * 0.3) {
+                page2.classList.add('show');
+            } else {
+                page2.classList.remove('show');
+            }
+        }
+
+        // 第二页 → 第三页：显示下载页
+        if (top >= h && top < h * 2) {
+            let progress = (top - h) / h;
+            if (progress > 0.25) {
+                page3.classList.add('show');
+            } else {
+                page3.classList.remove('show');
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
