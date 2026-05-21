@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/download/anan.apk",
+      "destination": "http://123.207.198.66/Anan.apk"
+    }
+  ]
+}
